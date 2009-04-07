@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Testing Sound Manager</title>
+    <script type="text/javascript" src="/javascripts/soundmanager/script/soundmanager2.js"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+    	soundManager.debugMode = true;
+    	soundManager.url = '/javascripts/soundmanager/swf/';
+    	soundManager.onload = function(){
+    		/*var player = soundManager.createSound({
+    			id: 'player_container',
+    			url: 'http://www.nowwearefree.com/music/yummypigtails.mp3',
+    		});
+    		player.play();*/
+    	}
+    	soundManager.onerror = function(){
+    		
+    	}
+    //]]>
+    </script>
+  </head>
+  <body>
+  	<div id="player"></div>
+  	<h1>Testing Soundmanager</h1>
+  </body>
+</html>
