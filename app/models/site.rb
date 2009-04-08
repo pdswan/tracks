@@ -16,7 +16,6 @@ class Site < ActiveRecord::Base
 		songs = GetSongs.getSongsFromURI(self.uri)
 		songs.each do |s|
 			song_object = Song.create(:uri => s, :site_id => self.id)
-			pp song_object
 		end
 	end
 end
