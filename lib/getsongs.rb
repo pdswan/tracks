@@ -8,7 +8,12 @@ require('hpricot')
 
 module GetSongs
 	FILETYPES = ['mp3']
-	REGEXP = Regexp.new('(?:<|&lt;)a href="(.+?\.(?:' + FILETYPES.join('|') + '))"')
+	# need to grab text from link and store it as the song title as well.
+	REGEXP = Regexp.new('(?:<|&lt;)a href="(.+?\.(?:' + FILETYPES.join('|') + '))".*?>(.+?)</a>', true)
+	
+	def GetSongs.getSongObjectFromMatches(m)
+		((m.length == 3) && {:uri => m[1], :title => m[2].gsub(/<\/?[^>]*>/, '').chomp}) || nil
+	end
 	
 	def GetSongs.getSongsFromURI(uri, find_feed = true)
 		songs = nil
@@ -16,16 +21,20 @@ module GetSongs
 		if feeduri then
 			#extract from feed
 			feed = FeedNormalizer::FeedNormalizer.parse open(feeduri) 
-			songs = feed.entries.map {|e| e.content.match(REGEXP).to_a.reject {|f| f.match(/</)}}.flatten.compact
+			songs = feed.entries.map do |e|
+				GetSongs.getSongObjectFromMatches(e.content.match(REGEXP).to_a)
+			end.compact
 		else
 			#extract from html
 			doc = Hpricot(open(uri))
-			songs = doc.search("a").to_a.map {|a| a.to_html.match(REGEXP)[1] rescue nil}.compact
+			songs = doc.search('a').to_a.map do |a|
+				GetSongs.getSongObjectFromMatches(a.to_html.match(REGEXP).to_a)
+			end.compact
 		end
 		songs
 	end
 	
-	def GetSongs.getURILastModified(uri, find_feed)
+	def GetSongs.getURILastModified(uri, find_feed = true)
 		uri = (find_feed && Rfeedfinder.feed(uri)) || uri
 		f = open(uri)
 		pp f.meta
@@ -42,6 +51,9 @@ if __FILE__ == $0
 	end
 	p "uri: #{uri}"
 	p "regexp: #{GetSongs::REGEXP}"
-	p GetSongs.getSongsFromURI(uri, use_feed)
-	p GetSongs.getURILastModified(uri, use_feed)
+	songs = GetSongs.getSongsFromURI(uri, use_feed)
+	songs.each do |s|
+		p "uri: #{s[:uri]}, title: #{s[:title]}"
+	end
+	GetSongs.getURILastModified(uri, use_feed)
 end

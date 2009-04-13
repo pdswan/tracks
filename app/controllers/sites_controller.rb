@@ -9,6 +9,15 @@ class SitesController < ApplicationController
       format.xml  { render :xml => @sites }
     end
   end
+  
+  # GET /sites/1/songs.json
+  def songs
+  	@songs = Site.find(params[:id]).get_songs
+  	
+  	respond_to do |format|
+  		format.json { render :json => @songs }
+  	end
+  end
 
   # GET /sites/1
   # GET /sites/1.xml

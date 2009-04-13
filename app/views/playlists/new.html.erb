@@ -1,0 +1,187 @@
+<% content_for :javascripts do %>
+<%= javascript_include_tag 'soundmanager/script/soundmanager2.js' %>
+<script type="text/javascript">
+	/* grab 3 random site on load and start loading their songs */
+	var Track = Class.create({
+		initialize: function(track){
+			this.track = $(track)
+			if( !this.track ) throw 'Track: invalid track element!';
+			this.sound = soundManager.createSound({
+				id: this.track.down('.sound').identify(),
+				url: this.track.down('a.song_link').readAttribute('href')
+			});
+		},
+		play: function(){
+			if( this.sound.paused || this.sound.playState === 0) this.sound.play();
+		},
+		pause: function(){
+			if( this.sound.playState === 1 ) this.sound.pause();
+		},
+		stop: function(){
+			this.sound.stop();
+		},
+		destroy: function(){
+			this.sound.destroy();
+		}
+	});
+	Track.template = new Template('<li id="track_#{id}" class="track site_#{site_id}"><a href="#{uri}" class="song_link">#{title}<\/a><div class="sound" id="sound_#{id}" /><\/li>');
+	
+	/* Playlist class will manage adding and removing songs from the list it is passed.  Will broadcast events on addition, removal and re-ordering */
+	var Playlist = Class.create({
+		current_track: null,
+		is_playing: false,
+		tracks: [],
+		
+		initialize: function(container){
+			this.container = $(container);
+			if( !this.container || !/(o|u)l/i.test(this.container.tagName) ) throw 'Playlist: invalid container element';
+			this.options = Object.extend({
+			}, arguments[1] || {});
+		},
+		
+		play: function(i){
+			var new_track = null;
+			if( Object.isNumber(i) ){
+				new_track = this.container.down('.track', i);
+			}else{
+				console.log(i);
+				new_track = this.container.down(i);
+			}
+			if( this.current_track && this.current_track !== new_track ) this.tracks[this.current_track.identify()].stop();
+			this.current_track = new_track;
+			if( this.current_track ) this.tracks[this.current_track.identify()].play();
+		},
+		next: function(){
+			if( !this.current_track ) return false;
+			var next = this.current_track.next('.track');
+			if( !next && this.continuous ) next = this.container.down('.track');
+			if( next && next !== this.current_track){
+				this.tracks[this.current_track.identify()].stop();
+				this.current_track = next;
+				this.tracks[this.current_track.identify()].play();
+				return true;
+			}
+			return false;
+		},
+		previous: function(){
+			if( !this.current_track ) return false;
+			var prev = this.current_track.previous('.track');
+			if( !prev && this.continuous ) prev = this.container.select('.track').last();
+			if( prev && next !== this.current_track ){
+				this.tracks[this.current_track.identify()].stop();
+				this.current_track = prev;
+				this.tracks[this.current_track.identify()].play();
+				return true;
+			}
+			return false;
+		},
+		
+		toggleSiteSongs: function(e){
+			try{
+				var elm = e.element();
+				var id = elm.value;
+				if( e.element().checked ){
+					this._addSiteSongs(id);
+				}else{
+					this._removeSiteSongs(id);
+				}
+			}catch(e){
+				throw e;
+			}
+		},
+		
+		addSongs: function(songs){
+			if( !Object.isArray(songs) ) songs = [songs];
+			var html = songs.map(function(s){
+				return Track.template.evaluate(s.song);
+			}, this).join("\n");
+			this.container.insert({top: html});
+			(function(){
+				if( songs.length ){
+					var tracks = this.container.select('li.site_' + songs[0].song.site_id);
+				
+					tracks.each(function(t){
+						this.tracks[t.identify()] = new Track(t);
+						t.observe('click', this.play.bind(this, '#' + t.identify()));
+					}.bind(this));
+				
+					this.container.fire('playlist:songs_added', {playlist: this, songs: tracks});
+				}
+			}).bind(this).defer();
+		},
+		
+		_addSiteSongs: function(id){
+			/* 
+			 * 1. grab songs via xhr
+			 * 2. add them to the playlist
+			 */
+			 new Ajax.Request('/sites/songs/' + id + '.json', {
+			 	method: 'GET',
+			 	onComplete: function(r){
+			 		this.addSongs( r.responseJSON || eval('(' + r.responseText + ')') );
+			 	}.bind(this)
+			 });
+		},
+		
+		_removeSiteSongs: function(id){
+			/* could potentially just hide the songs, remove an active class and remake the sortable */
+			var tracks = this.container.select('.site_' + id).invoke('remove');
+			tracks.each(function(s){
+				var id = s.identify();
+				this.tracks[id].destroy();
+				delete this.tracks[id];
+			});
+			this.container.fire.bind(this.container).defer('playlist:songs_removed', {playlist: this, songs: songs});
+		},
+		
+		observe: function(){
+			this.container.observe.apply(this.container, arguments);
+		}
+	});
+	
+	TracksInterface = {
+		initialize: function(){
+			this.playlist = new Playlist('playlist');
+			$$('.site_checkbox').invoke('observe', 'click', this.playlist.toggleSiteSongs.bindAsEventListener(this.playlist));
+			/* TODO: need to set a hidden input with the value of the serialized sortable */
+			this.playlist.observe('playlist:songs_added', TracksInterface.createSortable.bindAsEventListener(this));
+			this.playlist.observe('playlist:songs_removed', TracksInterface.createSortable.bindAsEventListener(this));
+		},
+		
+		createSortable: function(e){
+			Sortable.create('playlist', {overlap: 'vertical'})
+		}
+	}
+	
+	soundManager.debugMode = false;
+	soundManager.url = '/javascripts/soundmanager/swf/';
+	soundManager.onload = function(){
+		TracksInterface.initialize();
+	}
+</script>
+<% end -%>
+<div>
+<% form_for(@playlist) do |f| %>
+  <%= f.error_messages %>
+  <%= hidden_field_tag 'playlist_songs' %>
+  <p>
+    <%= f.label :title %> <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description %> <%= f.text_area :description %>
+  </p>
+  <ol id="playlist">
+  	
+  </ol>
+  <p>
+    <%= f.submit 'Save' %>
+  </p>
+<% end %>
+</div>
+<div>
+	<h3>Previously Added Sites</h3>
+	<% @sites.each do |s| %>
+		<% puts s.to_s %>
+		<input type="checkbox" value="<%= s.id %>" class="site_checkbox" /> <%= s.name %><br />
+	<% end %>
+</div>

@@ -1,0 +1,13 @@
+<p>
+  <b>Title:</b>
+  <%=h @playlist.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @playlist.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_playlist_path(@playlist) %> |
+<%= link_to 'Back', playlists_path %>
