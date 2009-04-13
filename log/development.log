@@ -7098,3 +7098,48 @@ Processing SitesController#songs to json (for 96.232.143.115 at 2009-04-13 04:52
   [4;36;1mSite Load (0.0ms)[0m   [0;1mSELECT * FROM "sites" WHERE ("sites"."id" = 9) [0m
   [4;35;1mSong Load (0.0ms)[0m   [0mSELECT * FROM "songs" WHERE ("songs".site_id = 9) [0m
 Completed in 52ms (View: 8, DB: 0) | 200 OK [http://tracks.pdswan.com/sites/songs/9.json]
+
+
+Processing PlaylistsController#new (for 96.232.143.115 at 2009-04-13 05:07:33) [GET]
+  Parameters: {"action"=>"new", "controller"=>"playlists"}
+
+SyntaxError (/home/pdswan/public_html/tracks.pdswan.com/app/models/site.rb:27: syntax error, unexpected tLSHFT
+<<<<<<< HEAD:app/models/site.rb
+  ^
+/home/pdswan/public_html/tracks.pdswan.com/app/models/site.rb:29: syntax error, unexpected tEQQ, expecting kEND
+=======
+   ^
+/home/pdswan/public_html/tracks.pdswan.com/app/models/site.rb:31: syntax error, unexpected tRSHFT, expecting kEND
+>>>>>>> 7a63fa1460f80529d058379050b2d1f40bd1b0d6:app/models/site.rb
+  ^):
+  app/controllers/playlists_controller.rb:30:in `new'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (60.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing PlaylistsController#new (for 96.232.143.115 at 2009-04-13 05:08:51) [GET]
+  Parameters: {"action"=>"new", "controller"=>"playlists"}
+  [4;36;1mSite Load (0.0ms)[0m   [0;1mSELECT * FROM "sites" ORDER BY name[0m
+Rendering template within layouts/application
+Rendering playlists/new
+Completed in 80ms (View: 40, DB: 0) | 200 OK [http://tracks.pdswan.com/]
+
+
+Processing PlaylistsController#new (for 96.232.143.115 at 2009-04-13 05:08:55) [GET]
+  Parameters: {"action"=>"new", "controller"=>"playlists"}
+  [4;35;1mSite Load (0.0ms)[0m   [0mSELECT * FROM "sites" ORDER BY name[0m
+Rendering template within layouts/application
+Rendering playlists/new
+Completed in 88ms (View: 44, DB: 0) | 200 OK [http://tracks.pdswan.com/]

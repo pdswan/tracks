@@ -24,11 +24,7 @@ class Site < ActiveRecord::Base
 		# each found file should be added to the songs database
 		songs = GetSongs.getSongsFromURI(self.uri)
 		songs.each do |s|
-<<<<<<< HEAD:app/models/site.rb
 			Song.create(:uri => s[:uri], :title => s[:title], :site_id => self.id)
-=======
-			song_object = Song.create(:uri => s, :site_id => self.id)
->>>>>>> 7a63fa1460f80529d058379050b2d1f40bd1b0d6:app/models/site.rb
 		end
 	end
 end
