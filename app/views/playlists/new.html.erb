@@ -1,7 +1,6 @@
 <% content_for :javascripts do %>
 <%= javascript_include_tag 'soundmanager/script/soundmanager2.js' %>
 <script type="text/javascript">
-	/* grab 3 random site on load and start loading their songs */
 	var Track = Class.create({
 		initialize: function(track){
 			this.track = $(track)
@@ -20,13 +19,12 @@
 		stop: function(){
 			this.sound.stop();
 		},
-		destroy: function(){
-			this.sound.destroy();
+		destruct: function(){
+			this.sound.destruct();
 		}
 	});
 	Track.template = new Template('<li id="track_#{id}" class="track site_#{site_id}"><a href="#{uri}" class="song_link">#{title}<\/a><div class="sound" id="sound_#{id}" /><\/li>');
 	
-	/* Playlist class will manage adding and removing songs from the list it is passed.  Will broadcast events on addition, removal and re-ordering */
 	var Playlist = Class.create({
 		current_track: null,
 		is_playing: false,
@@ -44,7 +42,6 @@
 			if( Object.isNumber(i) ){
 				new_track = this.container.down('.track', i);
 			}else{
-				console.log(i);
 				new_track = this.container.down(i);
 			}
 			if( this.current_track && this.current_track !== new_track ) this.tracks[this.current_track.identify()].stop();
@@ -111,11 +108,7 @@
 		},
 		
 		_addSiteSongs: function(id){
-			/* 
-			 * 1. grab songs via xhr
-			 * 2. add them to the playlist
-			 */
-			 new Ajax.Request('/sites/songs/' + id + '.json', {
+			new Ajax.Request('/sites/songs/' + id + '.json', {
 			 	method: 'GET',
 			 	onComplete: function(r){
 			 		this.addSongs( r.responseJSON || eval('(' + r.responseText + ')') );
@@ -128,10 +121,10 @@
 			var tracks = this.container.select('.site_' + id).invoke('remove');
 			tracks.each(function(s){
 				var id = s.identify();
-				this.tracks[id].destroy();
+				this.tracks[id].destruct();
 				delete this.tracks[id];
-			});
-			this.container.fire.bind(this.container).defer('playlist:songs_removed', {playlist: this, songs: songs});
+			}, this);
+			this.container.fire.bind(this.container).defer('playlist:songs_removed', {playlist: this, songs: tracks});
 		},
 		
 		observe: function(){

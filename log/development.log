@@ -7143,3 +7143,129 @@ Processing PlaylistsController#new (for 96.232.143.115 at 2009-04-13 05:08:55) [
 Rendering template within layouts/application
 Rendering playlists/new
 Completed in 88ms (View: 44, DB: 0) | 200 OK [http://tracks.pdswan.com/]
+
+
+Processing SitesController#songs to json (for 96.232.143.115 at 2009-04-13 05:11:20) [GET]
+  Parameters: {"format"=>"json", "action"=>"songs", "id"=>"9", "controller"=>"sites"}
+  [4;36;1mSite Load (4.0ms)[0m   [0;1mSELECT * FROM "sites" WHERE ("sites"."id" = 9) [0m
+  [4;35;1mSite Update (0.0ms)[0m   [0mUPDATE "sites" SET "last_polled" = '2009-04-13 05:11:22', "updated_at" = '2009-04-13 05:11:22' WHERE "id" = 9[0m
+  [4;36;1mSong Exists (0.0ms)[0m   [0;1mSELECT "songs".id FROM "songs" WHERE ("songs"."uri" = 'http://charlesrequina.com/newsletters/090409/RTK-WinterMix2009.mp3' AND "songs".site_id = 9) LIMIT 1[0m
+  [4;35;1mSong Load (0.0ms)[0m   [0mSELECT * FROM "songs" WHERE ("songs".site_id = 9) [0m
+Completed in 13017ms (View: 4, DB: 4) | 200 OK [http://tracks.pdswan.com/sites/songs/9.json]
+
+
+Processing SitesController#songs to json (for 96.232.143.115 at 2009-04-13 05:11:33) [GET]
+  Parameters: {"format"=>"json", "action"=>"songs", "id"=>"10", "controller"=>"sites"}
+  [4;36;1mSite Load (4.0ms)[0m   [0;1mSELECT * FROM "sites" WHERE ("sites"."id" = 10) [0m
+  [4;35;1mSite Update (0.0ms)[0m   [0mUPDATE "sites" SET "last_polled" = '2009-04-13 05:11:36', "updated_at" = '2009-04-13 05:11:36' WHERE "id" = 10[0m
+  [4;36;1mSong Exists (0.0ms)[0m   [0;1mSELECT "songs".id FROM "songs" WHERE ("songs"."uri" = 'http://mineorecords.com/mp3/croc-her.mp3' AND "songs".site_id = 10) LIMIT 1[0m
+  [4;35;1mSong Exists (0.0ms)[0m   [0mSELECT "songs".id FROM "songs" WHERE ("songs"."uri" = 'http://mineorecords.com/mp3/clues-rem.mp3' AND "songs".site_id = 10) LIMIT 1[0m
+  [4;36;1mSong Exists (0.0ms)[0m   [0;1mSELECT "songs".id FROM "songs" WHERE ("songs"."uri" = 'http://mineorecords.com/mp3/tdcc-som.mp3' AND "songs".site_id = 10) LIMIT 1[0m
+  [4;35;1mSong Exists (4.0ms)[0m   [0mSELECT "songs".id FROM "songs" WHERE ("songs"."uri" = 'http://mineorecords.com/mp3/lsoc-lov.mp3' AND "songs".site_id = 10) LIMIT 1[0m
+  [4;36;1mSong Exists (0.0ms)[0m   [0;1mSELECT "songs".id FROM "songs" WHERE ("songs"."uri" = 'http://mineorecords.com/mp3/velard-jim.mp3' AND "songs".site_id = 10) LIMIT 1[0m
+  [4;35;1mSong Load (0.0ms)[0m   [0mSELECT * FROM "songs" WHERE ("songs".site_id = 10) [0m
+Completed in 6264ms (View: 8, DB: 8) | 200 OK [http://tracks.pdswan.com/sites/songs/10.json]
+
+
+Processing PlaylistsController#new (for 96.232.143.115 at 2009-04-13 05:19:41) [GET]
+  Parameters: {"action"=>"new", "controller"=>"playlists"}
+  [4;36;1mSite Load (4.0ms)[0m   [0;1mSELECT * FROM "sites" ORDER BY name[0m
+Rendering template within layouts/application
+Rendering playlists/new
+Completed in 108ms (View: 60, DB: 4) | 200 OK [http://tracks.pdswan.com/]
+
+
+Processing PlaylistsController#new (for 96.232.143.115 at 2009-04-13 05:20:13) [GET]
+  Parameters: {"action"=>"new", "controller"=>"playlists"}
+  [4;35;1mSite Load (4.0ms)[0m   [0mSELECT * FROM "sites" ORDER BY name[0m
+Rendering template within layouts/application
+Rendering playlists/new
+Completed in 92ms (View: 44, DB: 4) | 200 OK [http://tracks.pdswan.com/]
+
+
+Processing SitesController#songs to json (for 96.232.143.115 at 2009-04-13 05:20:16) [GET]
+  Parameters: {"format"=>"json", "action"=>"songs", "id"=>"9", "controller"=>"sites"}
+  [4;36;1mSite Load (0.0ms)[0m   [0;1mSELECT * FROM "sites" WHERE ("sites"."id" = 9) [0m
+  [4;35;1mSong Load (4.0ms)[0m   [0mSELECT * FROM "songs" WHERE ("songs".site_id = 9) [0m
+Completed in 52ms (View: 4, DB: 4) | 200 OK [http://tracks.pdswan.com/sites/songs/9.json]
+
+
+Processing SitesController#songs to json (for 96.232.143.115 at 2009-04-13 05:20:18) [GET]
+  Parameters: {"format"=>"json", "action"=>"songs", "id"=>"10", "controller"=>"sites"}
+  [4;36;1mSite Load (4.0ms)[0m   [0;1mSELECT * FROM "sites" WHERE ("sites"."id" = 10) [0m
+  [4;35;1mSong Load (0.0ms)[0m   [0mSELECT * FROM "songs" WHERE ("songs".site_id = 10) [0m
+Completed in 76ms (View: 16, DB: 4) | 200 OK [http://tracks.pdswan.com/sites/songs/10.json]
+
+
+Processing PlaylistsController#new (for 96.232.143.115 at 2009-04-13 05:20:21) [GET]
+  Parameters: {"action"=>"new", "controller"=>"playlists"}
+  [4;36;1mSite Load (4.0ms)[0m   [0;1mSELECT * FROM "sites" ORDER BY name[0m
+Rendering template within layouts/application
+Rendering playlists/new
+Completed in 100ms (View: 48, DB: 4) | 200 OK [http://tracks.pdswan.com/]
+
+
+Processing PlaylistsController#new (for 96.232.143.115 at 2009-04-13 05:20:36) [GET]
+  Parameters: {"action"=>"new", "controller"=>"playlists"}
+  [4;35;1mSite Load (0.0ms)[0m   [0mSELECT * FROM "sites" ORDER BY name[0m
+Rendering template within layouts/application
+Rendering playlists/new
+Completed in 220ms (View: 180, DB: 0) | 200 OK [http://tracks.pdswan.com/]
+
+
+Processing SitesController#songs to json (for 96.232.143.115 at 2009-04-13 05:20:40) [GET]
+  Parameters: {"format"=>"json", "action"=>"songs", "id"=>"9", "controller"=>"sites"}
+  [4;36;1mSite Load (0.0ms)[0m   [0;1mSELECT * FROM "sites" WHERE ("sites"."id" = 9) [0m
+  [4;35;1mSong Load (0.0ms)[0m   [0mSELECT * FROM "songs" WHERE ("songs".site_id = 9) [0m
+Completed in 56ms (View: 8, DB: 0) | 200 OK [http://tracks.pdswan.com/sites/songs/9.json]
+
+
+Processing SitesController#songs to json (for 96.232.143.115 at 2009-04-13 05:20:41) [GET]
+  Parameters: {"format"=>"json", "action"=>"songs", "id"=>"10", "controller"=>"sites"}
+  [4;36;1mSite Load (0.0ms)[0m   [0;1mSELECT * FROM "sites" WHERE ("sites"."id" = 10) [0m
+  [4;35;1mSong Load (4.0ms)[0m   [0mSELECT * FROM "songs" WHERE ("songs".site_id = 10) [0m
+Completed in 60ms (View: 8, DB: 4) | 200 OK [http://tracks.pdswan.com/sites/songs/10.json]
+
+
+Processing PlaylistsController#new (for 96.232.143.115 at 2009-04-13 05:21:23) [GET]
+  Parameters: {"action"=>"new", "controller"=>"playlists"}
+  [4;36;1mSite Load (0.0ms)[0m   [0;1mSELECT * FROM "sites" ORDER BY name[0m
+Rendering template within layouts/application
+Rendering playlists/new
+Completed in 216ms (View: 164, DB: 0) | 200 OK [http://tracks.pdswan.com/]
+
+
+Processing SitesController#songs to json (for 96.232.143.115 at 2009-04-13 05:21:27) [GET]
+  Parameters: {"format"=>"json", "action"=>"songs", "id"=>"10", "controller"=>"sites"}
+  [4;35;1mSite Load (0.0ms)[0m   [0mSELECT * FROM "sites" WHERE ("sites"."id" = 10) [0m
+  [4;36;1mSong Load (0.0ms)[0m   [0;1mSELECT * FROM "songs" WHERE ("songs".site_id = 10) [0m
+Completed in 60ms (View: 12, DB: 0) | 200 OK [http://tracks.pdswan.com/sites/songs/10.json]
+
+
+Processing PlaylistsController#new (for 96.232.143.115 at 2009-04-13 05:22:01) [GET]
+  Parameters: {"action"=>"new", "controller"=>"playlists"}
+  [4;35;1mSite Load (0.0ms)[0m   [0mSELECT * FROM "sites" ORDER BY name[0m
+Rendering template within layouts/application
+Rendering playlists/new
+Completed in 92ms (View: 52, DB: 0) | 200 OK [http://tracks.pdswan.com/]
+
+
+Processing SitesController#songs to json (for 96.232.143.115 at 2009-04-13 05:22:05) [GET]
+  Parameters: {"format"=>"json", "action"=>"songs", "id"=>"10", "controller"=>"sites"}
+  [4;36;1mSite Load (4.0ms)[0m   [0;1mSELECT * FROM "sites" WHERE ("sites"."id" = 10) [0m
+  [4;35;1mSong Load (4.0ms)[0m   [0mSELECT * FROM "songs" WHERE ("songs".site_id = 10) [0m
+Completed in 60ms (View: 8, DB: 8) | 200 OK [http://tracks.pdswan.com/sites/songs/10.json]
+
+
+Processing SitesController#songs to json (for 96.232.143.115 at 2009-04-13 05:22:11) [GET]
+  Parameters: {"format"=>"json", "action"=>"songs", "id"=>"10", "controller"=>"sites"}
+  [4;36;1mSite Load (0.0ms)[0m   [0;1mSELECT * FROM "sites" WHERE ("sites"."id" = 10) [0m
+  [4;35;1mSong Load (4.0ms)[0m   [0mSELECT * FROM "songs" WHERE ("songs".site_id = 10) [0m
+Completed in 60ms (View: 8, DB: 4) | 200 OK [http://tracks.pdswan.com/sites/songs/10.json]
+
+
+Processing SitesController#songs to json (for 96.232.143.115 at 2009-04-13 05:22:23) [GET]
+  Parameters: {"format"=>"json", "action"=>"songs", "id"=>"9", "controller"=>"sites"}
+  [4;36;1mSite Load (0.0ms)[0m   [0;1mSELECT * FROM "sites" WHERE ("sites"."id" = 9) [0m
+  [4;35;1mSong Load (0.0ms)[0m   [0mSELECT * FROM "songs" WHERE ("songs".site_id = 9) [0m
+Completed in 52ms (View: 8, DB: 0) | 200 OK [http://tracks.pdswan.com/sites/songs/9.json]
